@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+{% block js %}
+{% endblock %}
+
+
+{% block main %}
+<div>
+    <h1>UPLOADED FILES</h1>
+    {% for file in files %}
+        <div> {{ file }}</div>
+    {% endfor %}
+    
+</div>
+
+
+
+{% endblock %}

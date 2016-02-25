@@ -33,23 +33,33 @@ def about():
 @app.route('/files/')
 def files():
     """files view"""
-    if session['logged_in'] == True:
-        return render_template("files.html")
-    return redirect(url_for('login'))
+    #if session['logged_in'] == True:
+    return render_template("files.html")
+    #return redirect(url_for('login'))
 
 @app.route('/add', methods=['POST'])
 def add_entry():
+    rootdir = os.getcwd() + '/app/static/uploads/'
+    print rootdir
     """add a file"""
     title = request.form['title']
     file = request.files['file']
     filename = file.filename
-    file.save(os.path.join("filefolder", filename))
+    file.save(os.path.join(rootdir, filename))
     return render_template("files.html",title=title)
     #g.db.execute('insert into entries (title, text) values (?, ?)',
     #             [title, filename])
     #g.db.commit()
     #flash('New entry was successfully posted')
     #return redirect(url_for('show_entries'))
+    
+@app.route('/filelisting/')
+def filelisting():
+    rootdir = os.getcwd() + '/app/static/uploads/'
+    files = os.listdir(rootdir)
+    return render_template("filelisting.html",files=files,route=rootdir)
+    
+    
 
 @app.route('/login', methods=['POST','GET'])
 def login():
